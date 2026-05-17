@@ -16,10 +16,10 @@ app.use(express.json());
 //     res.sendFile(path.join(__dirname,'/index.html'))
 // })
 
-let staff = [{name:'John', age:30, salary: 5000, id:1}, 
-             {name:'Jane', age:25, salary: 4000, id:2},
-             {name:'Doe', age:35, salary: 6000, id:3},
-             {name:'Smith', age:28, salary: 4500, id:4}]
+let staff = [{name:'John', age:30, salary: 5000, id:1, single:true}, 
+             {name:'Jane', age:25, salary: 4000, id:2, single:false},
+             {name:'Doe', age:35, salary: 6000, id:3, single:true},
+             {name:'Smith', age:28, salary: 4500, id:4, single:false}]
 
 app.get('/',(req,res) => {
     res.json({con:true, msg:"success",result: {data:'data from server'}})
@@ -61,6 +61,31 @@ app.post('/',(req,res) => {
     let bodyData = req.body;
     res.json({con:true, msg:"success",result: {bodyData}})
     console.log(bodyData);
+})
+
+app.delete ('/users/:id',(req,res ) => {
+    let idQuery = parseInt(req.params.id);
+    let findId = staff.find(s => s. id === idQuery);
+    if (findId) {
+        staff = staff.filter (s => s.id !== findId.id);
+        res.json({con:true, msg:"Deleted",result: {staff}})
+    } else {
+        res.json({con:false, msg:"user not found", status:404})
+    }
+})
+
+app.patch ('/users/:id/:salary', (req,res) => {
+   let id = req.params.id;
+   let newSalary = parseInt(req.params.salary);
+
+   let userFind = staff.find(s => s.id == id)
+    if (userFind) {
+        userFind.salary = newSalary;
+        res.json({con:true, msg:"Updated",result: {userFind}})
+
+    } else {
+        res.json({con:false, msg:"user not found", status:404})
+    }
 })
 
 app.listen(3000,() => {
