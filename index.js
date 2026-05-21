@@ -4,22 +4,13 @@
 //  request type-> (resful requests): get, post, put, delete , patch )
 //                  options , head , link , unlink
 
-const e = require('express');
-const { stat } = require('fs');
-
-const express = require ('express'),
-path = require('path'),
+const express = require('express');
 app = express();
 app.use(express.json());
 
 // app.get('/names',(req,res) => {
 //     res.sendFile(path.join(__dirname,'/index.html'))
 // })
-
-let staff = [{name:'John', age:30, salary: 5000, id:1, single:true}, 
-             {name:'Jane', age:25, salary: 4000, id:2, single:false},
-             {name:'Doe', age:35, salary: 6000, id:3, single:true},
-             {name:'Smith', age:28, salary: 4500, id:4, single:false}]
 
 // app.get('/',(req,res) => {
 //     res.json({con:true, msg:"success",result: {data:'data from server'}})
@@ -107,34 +98,41 @@ let staff = [{name:'John', age:30, salary: 5000, id:1, single:true},
 //     }
 // })
 
-app.route('/users')
-    .get((req,res) => {
-        res.json({con:true, msg:"success",result: {staff}});
-    })
+// app.route('/users')
+//     .get((req,res) => {
+//         res.json({con:true, msg:"success",result: {staff}});
+//     })
 
-    .post((req,res) => {
-        staff.push(req.body);
-        res.json({con:true, msg:"new user added",result: {staff}});
-    })
+//     .post((req,res) => {
+//         staff.push(req.body);
+//         res.json({con:true, msg:"new user added",result: {staff}});
+//     })
 
-    .patch((req,res,next) => {
-        let name = req.body.name;
-        let newSalary = req.body.salary;
+//     .patch((req,res,next) => {
+//         let name = req.body.name;
+//         let newSalary = req.body.salary;
 
-        let userFind = staff.find (s => s.name === name);
-        if (userFind) {
-            userFind.salary = newSalary;
-            res.json({con:true, msg:"Updated",result: {userFind}})
-        } else {
-            next(new Error("user not found"));
-        }
-    })
-    .delete((req,res,next) => {
+//         let userFind = staff.find (s => s.name === name);
+//         if (userFind) {
+//             userFind.salary = newSalary;
+//             res.json({con:true, msg:"Updated",result: {userFind}})
+//         } else {
+//             next(new Error("user not found"));
+//         }
+//     })
+//     .delete((req,res,next) => {
 
-    })
+//     })
+
+const userRoute = require('./routes/users');
+const productRoute = require('./routes/products');
+
+app.use('/users', userRoute);
+app.use('/products', productRoute);
 
 
-app.listen(3000,() => {
+
+app.listen(3000, () => {
     console.clear();
     console.log(__dirname);
     console.log('server running')
