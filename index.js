@@ -4,102 +4,13 @@
 //  request type-> (resful requests): get, post, put, delete , patch )
 //                  options , head , link , unlink
 
-const e = require('express');
-const { stat } = require('fs');
-
-const express = require('express'),
-    path = require('path'),
-    app = express();
+const express = require('express');
+app = express();
 app.use(express.json());
 
 // app.get('/names',(req,res) => {
 //     res.sendFile(path.join(__dirname,'/index.html'))
 // })
-
-let staff = [{ name: 'John', age: 30, salary: 5000, id: 1, single: true },
-{ name: 'Jane', age: 25, salary: 4000, id: 2, single: false },
-{ name: 'Doe', age: 35, salary: 6000, id: 3, single: true },
-{ name: 'Smith', age: 28, salary: 4500, id: 4, single: false }]
-
-let products = [{ name: 'phone', price: 500, id: 1, colors: ["red", "blue", "black"] },
-{ name: 'laptop', price: 1000, id: 2, colors: ["gray", "silver"] },
-{ name: 'tablet', price: 300, id: 3, colors: ["white", "black"] },
-{ name: 'headphones', price: 100, id: 4, colors: ["black", "white"] }]
-
-
-            // User routes
-
-
-app.get('/users', (req, res) => {
-    res.json({ con: true, msg: "success", result: { staff } });
-})
-
-app.post('/user', (req, res) => {
-    let newUser = req.body;
-    staff.push(newUser);
-    res.json({ con: true, msg: "new user added", result: { staff } })
-});
-
-app.patch('/user/:name', (req, res) => {
-    let name = req.params.name;
-    let newSalary = req.body.salary;
-    let nameUser = staff.find(s => s.name === name);
-    if (nameUser) {
-        nameUser.salary = newSalary;
-        res.json({ con: true, msg: "user updated", result: { nameUser } })
-    } else {
-        res.json({ con: false, msg: "user not found", status: 404 })
-    }
-
-})
-app.delete('/user/:name', (req, res) => {
-    let name = req.params.name;
-    let findName = staff.find(s => s.name === name)
-    if (findName) {
-        staff = staff.filter(s => s.name !== findName.name);
-        res.json({ con: true, msg: "user deleted", result: { staff } })
-    } else {
-        res.json({ con: false, msg: "user not found", status: 404 })
-    }
-});
-
-
-                    // Product routes
-
-app.get('/products', (req, res) => {
-    res.json({ con: true, msg: "success", result: { products } });
-}) 
-
-app.post ('/product', (req, res) => {
-    let newProduct = req.body;
-    products.push(newProduct);
-    res.json({ con: true, msg: "new product added", result: { products } })
-})
-
-app.patch('/product/:name', (req, res) => {
-
-    let name = req.params.name;
-    let newPrice = req.body.price;
-    let nameProduct = products.find (p => p.name === name);
-     if (nameProduct) {
-        nameProduct.price = newPrice;
-        res.json({ con: true, msg: "product updated", result: { nameProduct } })
-     } else {
-        res.json({ con: false, msg: "product not found", status: 404 })
-     }
-})
-
-app.delete ('/product/:id', (req, res) => {
-    let id = req.params.id;
-    let findId = products.find(p => p.id == id);
-
-    if (findId) {
-        products = products.filter(p => p.id != findId.id);
-        res.json({ con: true, msg: "product deleted", result: { products } })
-    } else {
-        res.json({ con: false, msg: "product not found", status: 404 })
-    }
-})
 
 // app.get('/',(req,res) => {
 //     res.json({con:true, msg:"success",result: {data:'data from server'}})
@@ -212,6 +123,12 @@ app.delete ('/product/:id', (req, res) => {
 //     .delete((req,res,next) => {
 
 //     })
+
+const userRoute = require('./routes/users');
+const productRoute = require('./routes/products');
+
+app.use('/users', userRoute);
+app.use('/products', productRoute);
 
 
 
