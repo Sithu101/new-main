@@ -132,8 +132,4 @@ app.use('/products', productRoute);
 
 
 
-app.listen(3000, () => {
-    console.clear();
-    console.log(__dirname);
-    console.log('server running')
-})
+
