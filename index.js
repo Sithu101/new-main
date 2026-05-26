@@ -8,6 +8,23 @@ const express = require('express');
 app = express();
 app.use(express.json());
 
+
+
+const { connectDB, getConn } = require('./utils/db');
+
+connectDB((err) => {
+    if (!err) {
+        console.log('Database connected successfully');
+    } else {
+        console.error('Database connection failed', err);
+    }
+});
+
+app.listen(3000, () => {
+    // console.clear();
+    console.log('Server running...')
+});
+
 // app.get('/names',(req,res) => {
 //     res.sendFile(path.join(__dirname,'/index.html'))
 // })
@@ -124,12 +141,8 @@ app.use(express.json());
 
 //     })
 
-const userRoute = require('./routes/users');
-const productRoute = require('./routes/products');
+// const userRoute = require('./routes/users');
+// const productRoute = require('./routes/products');
 
-app.use('/users', userRoute);
-app.use('/products', productRoute);
-
-
-
-
+// app.use('/users', userRoute);
+// app.use('/products', productRoute);
