@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-const connStr = "mongodb://localhost:27017/"
+const connStr = "mongodb://localhost:27017/new"
 
 let conn;
 
@@ -8,7 +8,7 @@ const connectDB = (cb) => {
 
     MongoClient.connect(connStr)
         .then((client) => {
-            conn = client.db();
+            conn = client.db('new');
             cb();
             console.log('Connected to MongoDB');
         })

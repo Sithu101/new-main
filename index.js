@@ -25,6 +25,8 @@ app.listen(3000, () => {
     console.log('Server running...')
 });
 
+
+
 // app.get('/names',(req,res) => {
 //     res.sendFile(path.join(__dirname,'/index.html'))
 // })
@@ -141,8 +143,35 @@ app.listen(3000, () => {
 
 //     })
 
-// const userRoute = require('./routes/users');
-// const productRoute = require('./routes/products');
+const userRoute = require('./routes/users');
+const productRoute = require('./routes/products');
 
 // app.use('/users', userRoute);
 // app.use('/products', productRoute);
+
+// app.get('/users',async (req, res) => {
+
+//     let db = getConn();
+//     let users = await db.collection('username').find().toArray();
+//     console.log("database data",users);
+//     res.json({ con: true, msg: "success", result: { users } })
+//     if (users) {
+//         res.json({ con: true, msg: "success", result: { users } })
+//     } else {
+//         res.json({ con: false, msg: "users not found", status: 404 })
+//     }
+// })
+
+app.get('/users', async (req, res) => {
+    let users = []
+    let db = getConn();
+     await db.collection('username').find().forEach(user => users.push(user))
+        .then(() => {
+            console.log("database data", users);
+            res.json({ con: true, msg: "success", result: { users } })
+        })
+        .catch((err) => {
+            console.error('Error fetching users', err);
+            res.json({ con: false, msg: "Error fetching users", status: 500 })
+        })
+})
