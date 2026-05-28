@@ -10,7 +10,6 @@ const connectDB = (cb) => {
         .then((client) => {
             conn = client.db('new');
             cb();
-            console.log('Connected to MongoDB');
         })
 
         .catch(err => cb(err));
