@@ -1,9 +1,9 @@
 const db = require('../utils/db').getConn();
+const { ObjectId } = require('mongodb');
 
-
-const all =  (req, res) => {
+const all = (req, res) => {
     let products = []
-     db.collection('products').find()
+    db.collection('products').find()
         .forEach(product => products.push(product))
         .then(() => {
             res.status(201).json({ conn: true, mesg: "product added", result: { products: products } })
@@ -30,11 +30,30 @@ const add = async (req, res) => {
 
 const update = (req, res) => {
 
+    let id = ObjectId.createFromHexString(req.params.id);
+    let obj = req.body;
+
+    db.collection("products").updateOne({ _id: id }, { $set: obj })
+        .then(() => {
+            res.status(201).json({ conn: true, mesg: "product updated" })
+        })
+        .catch((err) => {
+            console.error('Error updating product', err);
+            res.json({ con: false, msg: "Error updating product", status: 500 })
+        });
 
 }
 
 const drop = (req, res) => {
-
+    let id = ObjectId.createFromHexString(req.params.id);
+    db.collection("products").deleteOne({ _id: id })
+    .then(() => {
+        res.status(201).json({ conn: true, mesg: "product deleted" })
+    })
+    .catch((err) => {
+        console.error('Error deleting product', err);
+        res.json({ con: false, msg: "Error deleting product", status: 500 })
+    });
 }
 
 module.exports = {
