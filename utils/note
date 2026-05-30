@@ -1,0 +1,38 @@
+
+
+filter / Query Operators
+
+        -@eq: equal 1 = 1
+        -@ne: not equal 1 != 2
+        -@gt: greater than 2 > 1
+        -@gte: greater than or equal 2 >= 2
+        -@lt: less than 1 < 2
+        -@lte: less than or equal 2 <= 2
+        -@in: in array 
+        -@nin: not in array
+
+
+
+        -@and: logical AND  1 or more conditions must be true
+        -@or: logical OR   1 or more conditions must be true
+        -@nor: logical NOR  none of the conditions must be true
+        -@not: negate filter inverse of the array expression
+
+         
+
+        -@regex: regular expression
+        -@where: JavaScript expression
+
+
+
+
+        -@options: regular expression options (i, m, s, u, y)
+        -@elemMatch: match array elements
+        -@size: size of array
+        -@all: match all elements in array
+        -@exists: field exists
+        -@type: field type
+        -@expr: use aggregation expression
+        -@jsonSchema: validate against JSON Schema
+        -@text: text search
+        
