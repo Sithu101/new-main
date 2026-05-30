@@ -8,5 +8,5 @@ module.exports = router;
 
 router.get('/', Controller.all);
 router.post('/', Controller.add);
-router.patch('/:id', Controller.update);
-router.delete('/:id', Controller.drop);
+router.patch('/:price', Controller.update);
+router.delete('/:price', Controller.drop);
