@@ -3,8 +3,12 @@ const { ObjectId } = require('mongodb');
 
 const all = (req, res) => {
     let products = []
-    db.collection('products').find().project({ name: 1, price: 1, _id: 0 })
-        .forEach(product => products.push(product))
+    db.collection('products')
+
+
+       .find({price:{$not:{$in:[1000, 3000]}}}).forEach(product => products.push(product))
+
+
         .then(() => {
             res.status(201).json({ conn: true, mesg: "product added", result: { products: products } })
         })

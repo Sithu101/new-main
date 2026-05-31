@@ -22,17 +22,18 @@ filter / Query Operators
 
         -@regex: regular expression
         -@where: JavaScript expression
-
-
-
-
-        -@options: regular expression options (i, m, s, u, y)
-        -@elemMatch: match array elements
-        -@size: size of array
-        -@all: match all elements in array
-        -@exists: field exists
-        -@type: field type
-        -@expr: use aggregation expression
-        -@jsonSchema: validate against JSON Schema
-        -@text: text search
         
+
+        Update Operators
+
+        -$currentDate
+        -$inc
+        -$rename
+        -$set
+        -$unsert
+
+        -$addToSet
+        -$pop
+        -$pull
+        -$pull
+
